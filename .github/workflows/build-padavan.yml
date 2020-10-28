@@ -36,6 +36,11 @@ jobs:
         cd /opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
+    - name: set go
+      run: |
+        cd /opt/hostedtoolcache/go
+        rm -rf /opt/hostedtoolcache/go/1.14.10
+        mv 1.15.3 1.14.10
     - name: Build Firmware
       env:
         TNAME: K2P-5.0
@@ -95,11 +100,6 @@ jobs:
         #sed -i '/自定义项/d' .config
         #echo "自定义项=y" >> .config
         #########################################################################################
-        -name:set go
-        run:|
-        cd /opt/hostedtoolcache/go
-        rm -rf /opt/hostedtoolcache/go/1.14.10.
-        mv 1.15.3 1.14.10
         sudo ./clear_tree
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
